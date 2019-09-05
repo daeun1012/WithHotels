@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+android {
+    compileSdkVersion Versions.compileSdk
+    defaultConfig {
+        applicationId ApplicationId.id
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation SupportLibraries.appcompat
+    implementation SupportLibraries.material
+    implementation SupportLibraries.constraintLayout
+    implementation SupportLibraries.recyclerview
+
+    implementation Libraries.kotlin
+    implementation Libraries.ktx
+    implementation Libraries.lifecycleViewModel
+    implementation Libraries.lifecycleViewModelKtx
+    implementation Libraries.navigationFragment
+    implementation Libraries.navigationUi
+    implementation Libraries.viewPager2
+    implementation Libraries.fragment
+    implementation Libraries.room
+
+    kapt Compilers.room
+
+    testImplementation TestLibraries.junit
+    androidTestImplementation TestLibraries.testRunner
+    androidTestImplementation TestLibraries.espresso
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
+}
