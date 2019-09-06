@@ -39,16 +39,22 @@ dependencies {
     implementation Libraries.ktx
     implementation Libraries.lifecycleViewModel
     implementation Libraries.lifecycleViewModelKtx
+    implementation Libraries.lifecycleLiveData
     implementation Libraries.navigationFragment
     implementation Libraries.navigationUi
     implementation Libraries.viewPager2
     implementation Libraries.fragment
     implementation Libraries.room
+    implementation Libraries.retrofit
+    implementation Libraries.retrofitGson
+    implementation Libraries.okhttpLogging
+    implementation Libraries.timber
+    implementation Libraries.stetho
+    implementation Libraries.stethoOkhttp
 
     kapt Compilers.room
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.testRunner
     androidTestImplementation TestLibraries.espresso
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
 }

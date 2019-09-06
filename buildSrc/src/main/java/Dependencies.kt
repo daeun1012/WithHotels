@@ -25,12 +25,18 @@ object Versions {
 
     val kotlin = "1.3.41"
     val ktx = "1.0.2"
-    val lifecycle = "2.0.0"
+    val lifecycle = "2.2.0-alpha03"
     val navigation = "2.0.0"
     val viewPager2 = "1.0.0-beta03"
     val recyclerview = "1.1.0-alpha05"
 
     val room = "2.1.0"
+
+    val retrofit = "2.3.0"
+    val okhttpLogging = "3.9.0"
+
+    val timber = "4.7.1"
+    val stetho = "1.5.0"
 }
 
 object Libraries {
@@ -39,6 +45,7 @@ object Libraries {
 
     val lifecycleViewModel = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" //implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
 
     val navigationFragment = "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}"
     val navigationUi = "androidx.navigation:navigation-ui-ktx:${Versions.navigation}"
@@ -47,6 +54,15 @@ object Libraries {
     val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
 
     val room = "androidx.room:room-runtime:${Versions.room}"
+
+    val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpLogging}"
+
+    val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+
+    val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
+    val stethoOkhttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
 }
 
 object Compilers {

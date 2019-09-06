@@ -3,4 +3,6 @@
 
     <string name="hotel_list">리스트</string>
     <string name="like_list">좋아요</string>
+
+    <string name="no_results">리스트가 없습니다.</string>
 </resources>
