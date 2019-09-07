@@ -7,7 +7,8 @@ import io.github.daeun1012.withhotels.data.local.HotelDatabase
 import io.github.daeun1012.withhotels.data.remote.HotelRemoteDataSource
 import io.github.daeun1012.withhotels.data.repository.HotelRepository
 import io.github.daeun1012.withhotels.data.remote.HotelService
-import io.github.daeun1012.withhotels.ui.main.hotels.HotelListViewModelFactory
+import io.github.daeun1012.withhotels.data.repository.LikeRepository
+import io.github.daeun1012.withhotels.ui.main.MainViewModelFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -18,9 +19,14 @@ val BASE_URL = "https://withinnovation.co.kr"
 
 object InjectorUtils {
 
-    fun provideHotelViewModelFactory(context: Context): ViewModelProvider.Factory = HotelListViewModelFactory(provideHotelListRepository(context))
+    fun provideMainViewModelFactory(context: Context): ViewModelProvider.Factory =
+        MainViewModelFactory(
+            provideHotelListRepository(context), provideLikeRepository(context)
+        )
 
     private fun provideHotelListRepository(context: Context) = HotelRepository(HotelRemoteDataSource(getService()), provideHotelsDatabase(context))
+
+    private fun provideLikeRepository(context: Context) = LikeRepository.getInstance(HotelDatabase.getInstance(context).likeDao())
 
     private fun getService(): HotelService = createRetrofit().create(HotelService::class.java)
 
@@ -40,6 +46,6 @@ object InjectorUtils {
         HotelLocalDataSource(
             HotelDatabase.getInstance(
                 context
-            ).hotelsDao()
+            ).hotelDao()
         )
 }

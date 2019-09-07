@@ -11,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
+import io.github.daeun1012.withhotels.ui.main.MainViewModel
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
 import io.github.daeun1012.withhotels.utils.InjectorUtils
 import timber.log.Timber
@@ -18,7 +19,7 @@ import timber.log.Timber
 class HotelListFragment : Fragment() {
 
     private lateinit var binding: FragmentHotelListBinding
-    private lateinit var viewModel : HotelListViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +27,10 @@ class HotelListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHotelListBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(this, InjectorUtils.provideHotelViewModelFactory(requireContext())).get(HotelListViewModel::class.java)
+        viewModel = ViewModelProviders.of(
+            activity!!,
+            InjectorUtils.provideMainViewModelFactory(requireContext())
+        ).get(MainViewModel::class.java)
         return binding.root
     }
 
@@ -36,6 +40,16 @@ class HotelListFragment : Fragment() {
         val adapter = HotelListAdapter(View.OnClickListener {
             val direction = MainFragmentDirections.actionMainToHotel(id.toString())
             it.findNavController().navigate(direction)
+        }, object : HotelListAdapter.Callback {
+            override fun toggleLike(hotel: Hotel?, isLike: Boolean) {
+                if (hotel == null) return
+
+                if (isLike) {
+                    viewModel.addLikes(hotel.id)
+                } else {
+                    viewModel.deleteLikes(hotel.id)
+                }
+            }
         })
         initRecycler(adapter)
         subscribeUi(adapter)

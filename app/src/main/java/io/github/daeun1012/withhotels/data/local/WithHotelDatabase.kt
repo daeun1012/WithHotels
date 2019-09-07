@@ -4,16 +4,21 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import io.github.daeun1012.withhotels.data.local.dao.HotelDao
+import io.github.daeun1012.withhotels.data.local.dao.LikeDao
 
 @Database(
-    entities = [Hotel::class],
+    entities = [Hotel::class, Like::class],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class HotelDatabase : RoomDatabase() {
 
-    abstract fun hotelsDao(): HotelDao
+    abstract fun hotelDao(): HotelDao
+
+    abstract fun likeDao(): LikeDao
 
     companion object {
 

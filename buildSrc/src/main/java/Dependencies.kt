@@ -48,8 +48,6 @@ object Libraries {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
-    val lifecycle = "androidx.lifecycle:lifecycle-runtime:${Versions.lifecycle}"
-    val lifecycleJava8 = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     val lifecycleViewModel = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" //implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
@@ -61,6 +59,7 @@ object Libraries {
     val fragment = "androidx.fragment:fragment-ktx:${Versions.fragment}"
 
     val room = "androidx.room:room-runtime:${Versions.room}"
+    val roomKtx = "androidx.room:room-ktx:${Versions.room}"
 
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"

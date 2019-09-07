@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 data class Description(
     @field:SerializedName("imagePath") val imagePath: String,
     @field:SerializedName("subject") val subject: String,
-    @field:SerializedName("price") val price: Int = 0
+    @field:SerializedName("price") val price: Long = 0
     )

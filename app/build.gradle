@@ -46,6 +46,7 @@ dependencies {
     implementation Libraries.viewPager2
     implementation Libraries.fragment
     implementation Libraries.room
+    implementation Libraries.roomKtx
     implementation Libraries.retrofit
     implementation Libraries.retrofitGson
     implementation Libraries.retrofitRxJava

@@ -4,9 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="likeListener"
+            type="android.view.View.OnClickListener" />
+
         <variable
             name="name"
             type="java.lang.String" />
@@ -35,6 +41,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/colorAccent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:src="@drawable/ic_plus"
+            android:background="@color/design_default_color_secondary"
+            android:onClick="@{likeListener}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_thumb"
+            app:layout_constraintEnd_toEndOf="@id/iv_thumb" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"

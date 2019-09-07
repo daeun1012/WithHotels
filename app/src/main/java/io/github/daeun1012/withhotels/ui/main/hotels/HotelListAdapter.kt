@@ -10,7 +10,8 @@ import com.bumptech.glide.Glide
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
-class HotelListAdapter(private val onItemClickListener: View.OnClickListener) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
+class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
+                       private val onLikeListener: Callback) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HotelViewHolder(ItemHotelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -20,7 +21,7 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener) : 
         val item = getItem(position)
         if(item != null) {
             (holder as HotelViewHolder).apply {
-                bind(item, onItemClickListener)
+                bind(item, onItemClickListener, onLikeListener)
             }
         }
 
@@ -28,19 +29,23 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener) : 
 
     class HotelViewHolder (private val binding: ItemHotelBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Hotel, onClickListener: View.OnClickListener) {
+        fun bind(item: Hotel, onClickListener: View.OnClickListener, onLikeListener: Callback) {
             binding.apply {
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
                 clickListener = onClickListener
+                likeListener = View.OnClickListener {
+                    // TODO : 좋아요 버튼 바꾸기
+                    onLikeListener.toggleLike(item, true)
+                }
                 name = item.name
                 rate = item.rate.toString()
                 executePendingBindings()
             }
         }
+    }
 
-        fun onItemClick() {
-
-        }
+    interface Callback {
+        fun toggleLike(hotel: Hotel?, isLike: Boolean)
     }
 }
 
