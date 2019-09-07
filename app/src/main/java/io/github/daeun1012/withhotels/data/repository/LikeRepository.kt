@@ -15,6 +15,8 @@ class LikeRepository private constructor(
 
     fun isLiked(hotelId: Long) = likeDao.isLiked(hotelId)
 
+    fun isLikedSync(hotelId: Long) = likeDao.isLikedSync(hotelId)
+
     companion object {
 
         // For Singleton instantiation

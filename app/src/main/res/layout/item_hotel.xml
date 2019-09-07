@@ -23,7 +23,7 @@
 
         <variable
             name="isLiked"
-            type="Boolean" />
+            type="androidx.lifecycle.LiveData&lt;Boolean>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

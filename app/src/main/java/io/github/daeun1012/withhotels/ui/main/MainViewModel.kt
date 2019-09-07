@@ -1,6 +1,5 @@
 package io.github.daeun1012.withhotels.ui.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -14,7 +13,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-
+import timber.log.Timber
 
 class MainViewModel(
     private val repository: HotelRepository,
@@ -22,30 +21,49 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    var pagedListHotel = MutableLiveData<PagedList<Hotel>>()
+    private val _pagedListHotel = MutableLiveData<PagedList<Hotel>>()
+    val pagedListHotel = Transformations.map(_pagedListHotel) {
+        it.map { hotel ->
+            hotel.isLiked = likeRepository?.isLiked(hotel.id)
+        }
+        it
+    }
 
-//    private lateinit var _temp: LiveData<PagedList<Hotel>>
-    var pagedListLike = likeRepository.getAllLike().toLiveData(Config(pageSize = 30, enablePlaceholders = true, maxSize = 200))
+    private val _pagedListLike = likeRepository.getAllLike().toLiveData(Config(pageSize = 30, enablePlaceholders = true, maxSize = 200))
+    val pagedListLike = Transformations.map(_pagedListLike) {
+        it.map { hotel ->
+            hotel.isLiked = MutableLiveData(true)
+        }
+
+        it
+    }
 
     fun getHotels() {
         compositeDisposable.add(
             repository.fetchOrGetHotels()
-//                .map { list ->
-//                    list.map {
-//                        it.isLiked = likeRepository.isLiked(it.id)
-//                    }
-//
-//                    list
-//                }
+                .doOnNext { list ->
+                    isLiked(list)
+                    list
+                }
                 .subscribe({
-                    pagedListHotel.value = it
+                    _pagedListHotel.value = it
                 }, { it.printStackTrace() })
         )
     }
 
-//    fun getLikes() {
-//        _temp =
-//    }
+    private fun isLiked(hotelList: List<Hotel>) {
+        compositeDisposable.add(
+            Single.fromCallable {
+                hotelList.map {
+                    it.isLiked = MutableLiveData(likeRepository?.isLikedSync(it.id))
+                    Timber.d("${it.id} : ${likeRepository?.isLikedSync(it.id)}")
+                }
+
+            }
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+        )
+    }
 
     fun addLikes(id: Long) {
         compositeDisposable.add(

@@ -19,6 +19,9 @@ interface LikeDao {
     @Query("SELECT EXISTS(SELECT 1 FROM likes WHERE hotel_id = :id LIMIT 1)")
     fun isLiked(id: Long): LiveData<Boolean>
 
+    @Query("SELECT EXISTS(SELECT 1 FROM likes WHERE hotel_id = :id LIMIT 1)")
+    fun isLikedSync(id: Long): Boolean
+
     @Query("DELETE FROM likes WHERE hotel_id = :id")
     fun delete(id: Long): Int
 }

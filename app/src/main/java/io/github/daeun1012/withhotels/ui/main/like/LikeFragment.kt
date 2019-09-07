@@ -46,7 +46,8 @@ class LikeFragment : Fragment() {
             override fun toggleLike(hotel: Hotel?) {
                 if (hotel == null) return
 
-                if (hotel.isLiked?.value != null && hotel.isLiked?.value!!) {
+                val isLikeToggle = hotel.isLiked?.value != null && hotel.isLiked?.value!!
+                if (isLikeToggle) {
                     viewModel.addLikes(hotel.id)
                 } else {
                     viewModel.deleteLikes(hotel.id)

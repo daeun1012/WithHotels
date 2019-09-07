@@ -3,7 +3,9 @@ package io.github.daeun1012.withhotels.ui.main.hotels
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -33,15 +35,15 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
         fun bind(item: Hotel, onClickListener: View.OnClickListener, onLikeListener: Callback) {
             binding.apply {
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
-                clickListener = onClickListener
-                likeListener = View.OnClickListener {
-                    item.isLiked.value = !item.isLiked.value!!
-                    binding.isLiked = item.isLiked.value
-                    onLikeListener.toggleLike(item)
-                }
                 name = item.name
                 rate = item.rate.toString()
-                isLiked = item.isLiked?.value
+                isLiked = item.isLiked
+                clickListener = onClickListener
+                likeListener = View.OnClickListener {
+                    item.isLiked = MutableLiveData(!isLiked?.value!!)
+                    isLiked = item.isLiked
+                    onLikeListener.toggleLike(item)
+                }
                 executePendingBindings()
             }
         }

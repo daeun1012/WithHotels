@@ -13,5 +13,5 @@ data class Hotel(
     @field:SerializedName("description") @Embedded val description: Description? = null,
     @field:SerializedName("rate") val rate: Float = 0f
 ) {
-    @Ignore var isLiked: MutableLiveData<Boolean> = MutableLiveData(false)
+    @Ignore var isLiked: LiveData<Boolean>? = null
 }
