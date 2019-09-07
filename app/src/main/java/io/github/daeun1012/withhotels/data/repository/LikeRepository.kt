@@ -2,19 +2,18 @@ package io.github.daeun1012.withhotels.data.repository
 
 import io.github.daeun1012.withhotels.data.local.Like
 import io.github.daeun1012.withhotels.data.local.dao.LikeDao
-import io.reactivex.Completable
 
 class LikeRepository private constructor(
     private val likeDao: LikeDao
 ) {
 
-    fun addLike(like: Like): Completable {
-        return likeDao.insert(like)
-    }
+    fun addLike(like: Like) = likeDao.insert(like)
 
-    fun deleteLike(id: Long) {
-        return likeDao.delete(id)
-    }
+    fun deleteLike(id: Long) = likeDao.delete(id)
+
+    fun getAllLike() = likeDao.allLikes()
+
+    fun isLiked(hotelId: Long) = likeDao.isLiked(hotelId)
 
     companion object {
 

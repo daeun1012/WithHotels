@@ -41,10 +41,10 @@ class HotelListFragment : Fragment() {
             val direction = MainFragmentDirections.actionMainToHotel(id.toString())
             it.findNavController().navigate(direction)
         }, object : HotelListAdapter.Callback {
-            override fun toggleLike(hotel: Hotel?, isLike: Boolean) {
+            override fun toggleLike(hotel: Hotel?) {
                 if (hotel == null) return
 
-                if (isLike) {
+                if (hotel.isLiked?.value != null && hotel.isLiked?.value!!) {
                     viewModel.addLikes(hotel.id)
                 } else {
                     viewModel.deleteLikes(hotel.id)

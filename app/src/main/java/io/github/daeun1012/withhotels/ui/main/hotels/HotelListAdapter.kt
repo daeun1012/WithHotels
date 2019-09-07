@@ -3,6 +3,7 @@ package io.github.daeun1012.withhotels.ui.main.hotels
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -34,18 +35,20 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
                 clickListener = onClickListener
                 likeListener = View.OnClickListener {
-                    // TODO : 좋아요 버튼 바꾸기
-                    onLikeListener.toggleLike(item, true)
+                    item.isLiked.value = !item.isLiked.value!!
+                    binding.isLiked = item.isLiked.value
+                    onLikeListener.toggleLike(item)
                 }
                 name = item.name
                 rate = item.rate.toString()
+                isLiked = item.isLiked?.value
                 executePendingBindings()
             }
         }
     }
 
     interface Callback {
-        fun toggleLike(hotel: Hotel?, isLike: Boolean)
+        fun toggleLike(hotel: Hotel?)
     }
 }
 

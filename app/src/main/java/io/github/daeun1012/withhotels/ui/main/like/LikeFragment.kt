@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
+import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
+import io.github.daeun1012.withhotels.data.local.Like
 import io.github.daeun1012.withhotels.databinding.FragmentLikeBinding
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
 import io.github.daeun1012.withhotels.ui.main.MainViewModel
 import io.github.daeun1012.withhotels.ui.main.hotels.HotelListAdapter
 import io.github.daeun1012.withhotels.utils.InjectorUtils
+import timber.log.Timber
 
 class LikeFragment : Fragment() {
 
@@ -39,17 +43,26 @@ class LikeFragment : Fragment() {
             val direction = MainFragmentDirections.actionMainToHotel(id.toString())
             it.findNavController().navigate(direction)
         }, object : HotelListAdapter.Callback {
-            override fun toggleLike(hotel: Hotel?, isLike: Boolean) {
-                hotel?.let {
-                    if (isLike) {
-                        viewModel.addLikes(hotel.id)
-                    } else {
-                        viewModel.deleteLikes(hotel.id)
-                    }
+            override fun toggleLike(hotel: Hotel?) {
+                if (hotel == null) return
+
+                if (hotel.isLiked?.value != null && hotel.isLiked?.value!!) {
+                    viewModel.addLikes(hotel.id)
+                } else {
+                    viewModel.deleteLikes(hotel.id)
                 }
             }
         })
         initRecycler(adapter)
+        subscribeUi(adapter)
+//        viewModel.getLikes()
+    }
+
+    private fun subscribeUi(hotelAdapter: HotelListAdapter) {
+        viewModel.pagedListLike.observe(this, Observer<PagedList<Hotel>> {
+            Timber.d("Likes: ${it?.size}")
+            hotelAdapter.submitList(it)
+        })
     }
 
     private fun initRecycler(hotelAdapter: HotelListAdapter) {

@@ -20,6 +20,10 @@
         <variable
             name="rate"
             type="java.lang.String" />
+
+        <variable
+            name="isLiked"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,12 +49,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:src="@drawable/ic_plus"
             android:background="@color/design_default_color_secondary"
             android:onClick="@{likeListener}"
+            android:padding="10dp"
+            android:src="@{isLiked ? @drawable/ic_favorite_black_24dp : @drawable/ic_favorite_border_black_24dp}"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumb"
-            app:layout_constraintEnd_toEndOf="@id/iv_thumb" />
+            app:layout_constraintEnd_toEndOf="@id/iv_thumb"
+            tools:src="@drawable/ic_favorite_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_name"

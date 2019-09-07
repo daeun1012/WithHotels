@@ -43,6 +43,6 @@ class PageListHotelBoundaryCallback(private val remoteDataSource: HotelRemoteDat
             .observeOn(Schedulers.io())
 //            .ignoreElement() // TODO 확인
             .doFinally { isRequestRunning = false }
-            .subscribe({ Timber.i("Movies Completed") }, { it.printStackTrace() })
+            .subscribe({ Timber.i("Hotels Completed") }, { it.printStackTrace() })
     }
 }
