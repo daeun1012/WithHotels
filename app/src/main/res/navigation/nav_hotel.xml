@@ -19,9 +19,9 @@
         android:name="io.github.daeun1012.withhotels.ui.hotel.HotelFragment"
         tools:layout="@layout/fragment_hotel">
 
-<!--        <argument-->
-<!--            android:name="hotelId"-->
-<!--            app:argType="int" />-->
+        <argument
+            android:name="hotelId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

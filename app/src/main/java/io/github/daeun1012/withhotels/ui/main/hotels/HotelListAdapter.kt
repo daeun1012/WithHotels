@@ -1,6 +1,7 @@
 package io.github.daeun1012.withhotels.ui.main.hotels
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -9,7 +10,7 @@ import com.bumptech.glide.Glide
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
-class HotelListAdapter : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
+class HotelListAdapter(private val onItemClickListener: View.OnClickListener) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HotelViewHolder(ItemHotelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -19,7 +20,7 @@ class HotelListAdapter : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelD
         val item = getItem(position)
         if(item != null) {
             (holder as HotelViewHolder).apply {
-                bind(item)
+                bind(item, onItemClickListener)
             }
         }
 
@@ -27,16 +28,18 @@ class HotelListAdapter : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelD
 
     class HotelViewHolder (private val binding: ItemHotelBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Hotel) {
+        fun bind(item: Hotel, onClickListener: View.OnClickListener) {
             binding.apply {
-//                clickListener.apply {
-//                    listener
-//                }
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
+                clickListener = onClickListener
                 name = item.name
                 rate = item.rate.toString()
                 executePendingBindings()
             }
+        }
+
+        fun onItemClick() {
+
         }
     }
 }

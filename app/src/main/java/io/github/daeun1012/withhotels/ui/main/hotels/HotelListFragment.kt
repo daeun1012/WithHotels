@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
+import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
 import io.github.daeun1012.withhotels.utils.InjectorUtils
 import timber.log.Timber
 
@@ -31,7 +33,10 @@ class HotelListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HotelListAdapter()
+        val adapter = HotelListAdapter(View.OnClickListener {
+            val direction = MainFragmentDirections.actionMainToHotel(id.toString())
+            it.findNavController().navigate(direction)
+        })
         initRecycler(adapter)
         subscribeUi(adapter)
 

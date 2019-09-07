@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
-
         <variable
             name="name"
             type="java.lang.String" />
