@@ -13,8 +13,7 @@ import com.bumptech.glide.Glide
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
-class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
-                       private val onLikeListener: Callback) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
+class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HotelViewHolder(ItemHotelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -24,7 +23,7 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
         val item = getItem(position)
         if(item != null) {
             (holder as HotelViewHolder).apply {
-                bind(item, onItemClickListener, onLikeListener)
+                bind(item, onLikeListener)
             }
         }
 
@@ -32,13 +31,15 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
 
     class HotelViewHolder (private val binding: ItemHotelBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Hotel, onClickListener: View.OnClickListener, onLikeListener: Callback) {
+        fun bind(item: Hotel, onLikeListener: Callback) {
             binding.apply {
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
                 name = item.name
                 rate = item.rate.toString()
                 isLiked = item.isLiked
-                clickListener = onClickListener
+                clickListener = View.OnClickListener {
+                    onLikeListener.onItemClick(item)
+                }
                 likeListener = View.OnClickListener {
                     item.isLiked = MutableLiveData(!isLiked?.value!!)
                     isLiked = item.isLiked
@@ -50,7 +51,8 @@ class HotelListAdapter(private val onItemClickListener: View.OnClickListener,
     }
 
     interface Callback {
-        fun toggleLike(hotel: Hotel?)
+        fun toggleLike(hotel: Hotel)
+        fun onItemClick(hotel: Hotel)
     }
 }
 

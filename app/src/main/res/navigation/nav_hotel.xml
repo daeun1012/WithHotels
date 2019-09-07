@@ -20,8 +20,8 @@
         tools:layout="@layout/fragment_hotel">
 
         <argument
-            android:name="hotelId"
-            app:argType="string" />
+            android:name="hotel"
+            app:argType="io.github.daeun1012.withhotels.data.local.Hotel" />
     </fragment>
 
 </navigation>

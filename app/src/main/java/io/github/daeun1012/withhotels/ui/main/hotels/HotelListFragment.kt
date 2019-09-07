@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
@@ -37,11 +37,13 @@ class HotelListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HotelListAdapter(View.OnClickListener {
-            val direction = MainFragmentDirections.actionMainToHotel(id.toString())
-            it.findNavController().navigate(direction)
-        }, object : HotelListAdapter.Callback {
-            override fun toggleLike(hotel: Hotel?) {
+        val adapter = HotelListAdapter(object : HotelListAdapter.Callback {
+            override fun onItemClick(hotel: Hotel) {
+                val direction = MainFragmentDirections.actionMainToHotel(hotel)
+                this@HotelListFragment.findNavController().navigate(direction)
+            }
+
+            override fun toggleLike(hotel: Hotel) {
                 if (hotel == null) return
 
                 val isLikeToggle = hotel.isLiked?.value != null && hotel.isLiked?.value!!
