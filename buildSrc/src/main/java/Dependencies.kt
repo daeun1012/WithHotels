@@ -37,12 +37,17 @@ object Versions {
 
     val timber = "4.7.1"
     val stetho = "1.5.0"
+
+    val paging = "2.1.0"
+    val swipeRefreshLayout = "1.0.0"
 }
 
 object Libraries {
     val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     val ktx = "androidx.core:core-ktx:${Versions.ktx}"
 
+    val lifecycle = "androidx.lifecycle:lifecycle-runtime:${Versions.lifecycle}"
+    val lifecycleJava8 = "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle}"
     val lifecycleViewModel = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
     val lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" //implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03'
@@ -57,16 +62,22 @@ object Libraries {
 
     val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     val retrofitGson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    val retrofitRxJava = "com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofit}"
     val okhttpLogging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpLogging}"
 
     val timber = "com.jakewharton.timber:timber:${Versions.timber}"
 
     val stetho = "com.facebook.stetho:stetho:${Versions.stetho}"
     val stethoOkhttp = "com.facebook.stetho:stetho-okhttp3:${Versions.stetho}"
+
+    val paging = "androidx.paging:paging-runtime:${Versions.paging}"
+    val pagingRxJava = "androidx.paging:paging-rxjava2:${Versions.paging}"
+    val pagingKtx = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
 }
 
 object Compilers {
     val room = "androidx.room:room-compiler:${Versions.room}"
+    val lifecycle = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
 }
 
 object SupportLibraries {
@@ -74,6 +85,7 @@ object SupportLibraries {
     val material = "com.google.android.material:material:${Versions.material}"
     val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintlayout}"
     val recyclerview = "androidx.recyclerview:recyclerview:${Versions.recyclerview}"
+    val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeRefreshLayout}"
 }
 
 object TestLibraries {

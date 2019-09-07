@@ -10,8 +10,12 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="hotel"
-            type="io.github.daeun1012.withhotels.data.local.Hotel" />
+            name="name"
+            type="java.lang.String" />
+
+        <variable
+            name="rate"
+            type="java.lang.String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_thumb"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="@{name}"
             tools:text="호텔이름" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -55,6 +60,7 @@
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/tv_name"
             app:layout_constraintTop_toTopOf="parent"
+            android:text="@{rate}"
             tools:text="9.9" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

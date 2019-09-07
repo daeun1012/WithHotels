@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "hotels")
 data class Hotel(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
+    @PrimaryKey @ColumnInfo(name = "id") val id: Int,
     @field:SerializedName("name") val name: String,
     @field:SerializedName("thumbnail") val thumbnail: String,
     @field:SerializedName("description") @Embedded val description: Description? = null,

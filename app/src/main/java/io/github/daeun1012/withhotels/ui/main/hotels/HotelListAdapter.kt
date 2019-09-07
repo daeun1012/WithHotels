@@ -1,16 +1,14 @@
-package io.github.daeun1012.withhotels.ui.main
+package io.github.daeun1012.withhotels.ui.main.hotels
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
-class HotelListAdapter : ListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
+class HotelListAdapter : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HotelViewHolder(ItemHotelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -18,33 +16,27 @@ class HotelListAdapter : ListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCa
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
-
-        // cast generic RecyclerView.ViewHolder to Plant view holder
-        (holder as HotelViewHolder).apply {
-            bind(createOnClickListener(item.id), item)
+        if(item != null) {
+            (holder as HotelViewHolder).apply {
+                bind(item)
+            }
         }
+
     }
 
-    private fun createOnClickListener(id: String): View.OnClickListener {
-        return View.OnClickListener {
-            val direction = MainFragmentDirections.actionMainToHotel(id)
-            it.findNavController().navigate(direction)
-        }
-    }
+    class HotelViewHolder (private val binding: ItemHotelBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    class HotelViewHolder (
-        private val binding: ItemHotelBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(listener: View.OnClickListener, item: Hotel) {
+        fun bind(item: Hotel) {
             binding.apply {
-                clickListener = listener
-                hotel = item
+//                clickListener.apply {
+//                    listener
+//                }
+                name = item.name
+                rate = item.rate.toString()
                 executePendingBindings()
             }
         }
     }
-
 }
 
 private class HotelDiffCallback : DiffUtil.ItemCallback<Hotel>() {

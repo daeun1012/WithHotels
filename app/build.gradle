@@ -34,6 +34,7 @@ dependencies {
     implementation SupportLibraries.material
     implementation SupportLibraries.constraintLayout
     implementation SupportLibraries.recyclerview
+    implementation SupportLibraries.swipeRefreshLayout
 
     implementation Libraries.kotlin
     implementation Libraries.ktx
@@ -47,12 +48,17 @@ dependencies {
     implementation Libraries.room
     implementation Libraries.retrofit
     implementation Libraries.retrofitGson
+    implementation Libraries.retrofitRxJava
     implementation Libraries.okhttpLogging
     implementation Libraries.timber
     implementation Libraries.stetho
     implementation Libraries.stethoOkhttp
+    implementation Libraries.paging
+    implementation Libraries.pagingRxJava
+    implementation Libraries.pagingKtx
 
     kapt Compilers.room
+    kapt Compilers.lifecycle
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.testRunner
