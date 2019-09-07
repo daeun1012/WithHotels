@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
@@ -31,6 +32,7 @@ class HotelListAdapter : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelD
 //                clickListener.apply {
 //                    listener
 //                }
+                Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
                 name = item.name
                 rate = item.rate.toString()
                 executePendingBindings()

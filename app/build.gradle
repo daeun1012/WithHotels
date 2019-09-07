@@ -56,9 +56,11 @@ dependencies {
     implementation Libraries.paging
     implementation Libraries.pagingRxJava
     implementation Libraries.pagingKtx
+    implementation Libraries.glide
 
     kapt Compilers.room
     kapt Compilers.lifecycle
+    kapt Compilers.glide
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.testRunner

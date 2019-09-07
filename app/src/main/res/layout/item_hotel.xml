@@ -30,11 +30,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_thumb"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minWidth="50dp"
-            android:minHeight="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:minHeight="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/colorAccent" />
@@ -43,24 +42,22 @@
             android:id="@+id/tv_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_thumb"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="15dp"
             android:text="@{name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_thumb"
             tools:text="호텔이름" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_rate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toEndOf="@id/tv_name"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
             android:text="@{rate}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="9.9" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

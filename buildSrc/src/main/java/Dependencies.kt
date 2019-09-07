@@ -40,6 +40,8 @@ object Versions {
 
     val paging = "2.1.0"
     val swipeRefreshLayout = "1.0.0"
+
+    val glide = "4.9.0"
 }
 
 object Libraries {
@@ -73,11 +75,14 @@ object Libraries {
     val paging = "androidx.paging:paging-runtime:${Versions.paging}"
     val pagingRxJava = "androidx.paging:paging-rxjava2:${Versions.paging}"
     val pagingKtx = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
+
+    val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
 }
 
 object Compilers {
     val room = "androidx.room:room-compiler:${Versions.room}"
     val lifecycle = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
+    val glide = "com.github.bumptech.glide:compiler:${Versions.glide}"
 }
 
 object SupportLibraries {
