@@ -48,19 +48,14 @@ class HotelFragment : Fragment() {
         binding.hotelDetailScrollview.setOnScrollChangeListener(
             NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
 
-                // User scrolled past image to height of toolbar and the title text is
-                // underneath the toolbar, so the toolbar should be shown.
                 val shouldShowToolbar = scrollY > binding.toolbar.height
 
-                // The new state of the toolbar differs from the previous state; update
-                // appbar and toolbar attributes.
                 if (isToolbarShown != shouldShowToolbar) {
                     isToolbarShown = shouldShowToolbar
 
                     // Use shadow animator to add elevation if toolbar is shown
                     binding.appbar.isActivated = shouldShowToolbar
 
-                    // Show the plant name if toolbar is shown
                     binding.toolbarLayout.isTitleEnabled = shouldShowToolbar
                 }
             }

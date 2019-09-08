@@ -1,4 +1,4 @@
-package io.github.daeun1012.withhotels.ui.main.hotels
+package io.github.daeun1012.withhotels.ui.main.like
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.github.daeun1012.withhotels.data.local.Hotel
+import io.github.daeun1012.withhotels.data.local.Like
+import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
-class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<Hotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
+class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<LikeHotel, RecyclerView.ViewHolder>(HotelDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HotelViewHolder(ItemHotelBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -28,21 +32,26 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
 
     class HotelViewHolder (private val binding: ItemHotelBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Hotel, onLikeListener: Callback) {
+        fun bind(item: LikeHotel, onLikeListener: Callback) {
             binding.apply {
-                Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
-                name = item.name
-                rate = item.rate.toString()
+                Glide.with(binding.ivThumb.context).load(item.hotel.thumbnail).into(binding.ivThumb)
+                name = item.hotel.name
+                rate = item.hotel.rate.toString()
                 isLiked = item.isLiked
                 clickListener = View.OnClickListener {
-                    onLikeListener.onItemClick(item)
+                    onLikeListener.onItemClick(item.hotel)
                 }
                 likeListener = View.OnClickListener {
-                    item.isLiked = !item.isLiked
+                    item.hotel.isLiked = !item.hotel.isLiked
                     isLiked = item.isLiked
-                    onLikeListener.toggleLike(item)
+                    onLikeListener.toggleLike(item.hotel)
                 }
                 executePendingBindings()
+            }
+            if(item.createdAt != null) {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:dd", Locale.getDefault())
+                binding.tvDate.visibility = View.VISIBLE
+                binding.tvDate.text = dateFormat.format(item.createdAt?.time)
             }
         }
     }
@@ -53,13 +62,13 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
     }
 }
 
-private class HotelDiffCallback : DiffUtil.ItemCallback<Hotel>() {
+private class HotelDiffCallback : DiffUtil.ItemCallback<LikeHotel>() {
 
-    override fun areItemsTheSame(oldItem: Hotel, newItem: Hotel): Boolean {
-        return oldItem.id == newItem.id
+    override fun areItemsTheSame(oldItem: LikeHotel, newItem: LikeHotel): Boolean {
+        return oldItem.hotel.id == newItem.hotel.id
     }
 
-    override fun areContentsTheSame(oldItem: Hotel, newItem: Hotel): Boolean {
+    override fun areContentsTheSame(oldItem: LikeHotel, newItem: LikeHotel): Boolean {
         return oldItem == newItem
     }
 

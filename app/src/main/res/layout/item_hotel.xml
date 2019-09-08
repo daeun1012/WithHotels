@@ -23,7 +23,7 @@
 
         <variable
             name="isLiked"
-            type="androidx.lifecycle.LiveData&lt;Boolean>" />
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,5 +78,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             tools:text="9.9" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_rate"
+            tools:text="2019.09.01 11:12:01"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

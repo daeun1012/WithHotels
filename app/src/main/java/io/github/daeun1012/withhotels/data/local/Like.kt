@@ -10,7 +10,7 @@ import java.util.*
 )
 data class Like(
     @ColumnInfo(name = "hotel_id") val id: Long,
-    @ColumnInfo(name = "created_at") val plantDate: Calendar = Calendar.getInstance()
+    @ColumnInfo(name = "created_at") val createdAt: Calendar = Calendar.getInstance()
 ){
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

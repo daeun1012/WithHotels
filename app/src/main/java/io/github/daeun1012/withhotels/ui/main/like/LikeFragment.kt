@@ -7,15 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
-import io.github.daeun1012.withhotels.data.local.Like
+import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentLikeBinding
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
 import io.github.daeun1012.withhotels.ui.main.MainViewModel
-import io.github.daeun1012.withhotels.ui.main.hotels.HotelListAdapter
 import io.github.daeun1012.withhotels.utils.InjectorUtils
 import timber.log.Timber
 
@@ -40,7 +38,7 @@ class LikeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = HotelListAdapter(object : HotelListAdapter.Callback {
+        val adapter = LikeListAdapter(object : LikeListAdapter.Callback {
             override fun onItemClick(hotel: Hotel) {
                 val direction = MainFragmentDirections.actionMainToHotel(hotel)
                 this@LikeFragment.findNavController().navigate(direction)
@@ -49,7 +47,7 @@ class LikeFragment : Fragment() {
             override fun toggleLike(hotel: Hotel) {
                 if (hotel == null) return
 
-                val isLikeToggle = hotel.isLiked?.value != null && hotel.isLiked?.value!!
+                val isLikeToggle = hotel.isLiked
                 if (isLikeToggle) {
                     viewModel.addLikes(hotel.id)
                 } else {
@@ -59,17 +57,16 @@ class LikeFragment : Fragment() {
         })
         initRecycler(adapter)
         subscribeUi(adapter)
-//        viewModel.getLikes()
     }
 
-    private fun subscribeUi(hotelAdapter: HotelListAdapter) {
-        viewModel.pagedListLike.observe(this, Observer<PagedList<Hotel>> {
+    private fun subscribeUi(hotelAdapter: LikeListAdapter) {
+        viewModel.pagedListLike.observe(this, Observer<PagedList<LikeHotel>> {
             Timber.d("Likes: ${it?.size}")
             hotelAdapter.submitList(it)
         })
     }
 
-    private fun initRecycler(hotelAdapter: HotelListAdapter) {
+    private fun initRecycler(hotelAdapter: LikeListAdapter) {
         binding.list.apply {
             this.adapter = hotelAdapter
         }
