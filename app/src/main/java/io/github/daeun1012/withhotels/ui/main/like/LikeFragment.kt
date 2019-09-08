@@ -44,11 +44,10 @@ class LikeFragment : Fragment() {
                 this@LikeFragment.findNavController().navigate(direction)
             }
 
-            override fun toggleLike(hotel: Hotel) {
+            override fun toggleLike(hotel: Hotel, isLiked: Boolean) {
                 if (hotel == null) return
 
-                val isLikeToggle = hotel.isLiked
-                if (isLikeToggle) {
+                if (isLiked) {
                     viewModel.addLikes(hotel.id)
                 } else {
                     viewModel.deleteLikes(hotel.id)

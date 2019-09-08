@@ -12,6 +12,4 @@ data class Hotel(
     @field:SerializedName("thumbnail") val thumbnail: String,
     @field:SerializedName("description") @Embedded val description: Description? = null,
     @field:SerializedName("rate") val rate: Float = 0f
-): Serializable {
-    @Ignore var isLiked: Boolean = false
-}
+): Serializable

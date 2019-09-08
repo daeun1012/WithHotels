@@ -3,13 +3,14 @@ package io.github.daeun1012.withhotels.data.repository
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.HotelLocalDataSource
 import io.github.daeun1012.withhotels.data.local.Hotel
+import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.data.remote.HotelRemoteDataSource
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
 class PageListHotelBoundaryCallback(private val remoteDataSource: HotelRemoteDataSource,
                                     private val localDataSource: HotelLocalDataSource
-) : PagedList.BoundaryCallback<Hotel>() {
+) : PagedList.BoundaryCallback<LikeHotel>() {
 
     private var isRequestRunning = false
     private var requestedPage = 1
@@ -19,7 +20,7 @@ class PageListHotelBoundaryCallback(private val remoteDataSource: HotelRemoteDat
         fetchAndStoreHotels()
     }
 
-    override fun onItemAtEndLoaded(itemAtEnd: Hotel) {
+    override fun onItemAtEndLoaded(itemAtEnd: LikeHotel) {
         Timber.i("onItemAtEndLoaded")
         fetchAndStoreHotels()
     }
@@ -29,7 +30,11 @@ class PageListHotelBoundaryCallback(private val remoteDataSource: HotelRemoteDat
 
         isRequestRunning = true
         remoteDataSource.fetchHotels(requestedPage)
-            .map { res -> res.data?.hotelList!!.map { it }}
+            .map { res ->
+                res.data?.hotelList!!.map {
+                    it
+                }
+            }
             .doOnSuccess { listHotel ->
                 if(listHotel.isNotEmpty()) {
                     localDataSource.storeHotels(listHotel)

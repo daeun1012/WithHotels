@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
+import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
 import io.github.daeun1012.withhotels.ui.main.MainViewModel
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
@@ -43,11 +44,10 @@ class HotelListFragment : Fragment() {
                 this@HotelListFragment.findNavController().navigate(direction)
             }
 
-            override fun toggleLike(hotel: Hotel) {
+            override fun toggleLike(hotel: Hotel, isLiked: Boolean) {
                 if (hotel == null) return
 
-                val isLikeToggle = hotel.isLiked
-                if (isLikeToggle) {
+                if (isLiked) {
                     viewModel.addLikes(hotel.id)
                 } else {
                     viewModel.deleteLikes(hotel.id)
@@ -64,13 +64,13 @@ class HotelListFragment : Fragment() {
         binding.list.apply {
             this.adapter = hotelAdapter
         }
-        binding.refreshLayout.setOnRefreshListener {
-            viewModel.getHotels()
-        }
+//        binding.refreshLayout.setOnRefreshListener {
+//            viewModel.getHotels()
+//        }
     }
 
     private fun subscribeUi(hotelAdapter: HotelListAdapter) {
-        viewModel.pagedListHotel.observe(this, Observer<PagedList<Hotel>> {
+        viewModel.pagedListHotel.observe(this, Observer<PagedList<LikeHotel>> {
             Timber.d("Hotels: ${it?.size}")
             hotelAdapter.submitList(it)
         })

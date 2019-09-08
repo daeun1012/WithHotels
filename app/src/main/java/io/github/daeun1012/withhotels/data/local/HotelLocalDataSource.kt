@@ -6,4 +6,6 @@ class HotelLocalDataSource(private val hotelDao: HotelDao) {
     fun storeHotels(hotelList: List<Hotel>) = hotelDao.insert(hotelList)
 
     fun getHotels() = hotelDao.allHotels()
+
+    fun allHotelsWithLike() = hotelDao.allHotelsWithLike()
 }

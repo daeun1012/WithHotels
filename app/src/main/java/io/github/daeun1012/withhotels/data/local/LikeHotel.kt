@@ -11,5 +11,5 @@ data class LikeHotel(
     val createdAt: Calendar? = null,
 
     @ColumnInfo(name = "is_liked")
-    val isLiked: Boolean
+    var isLiked: Boolean
 )

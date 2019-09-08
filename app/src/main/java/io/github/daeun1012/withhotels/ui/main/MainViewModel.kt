@@ -1,6 +1,7 @@
 package io.github.daeun1012.withhotels.ui.main
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import io.github.daeun1012.withhotels.data.local.Hotel
@@ -11,6 +12,7 @@ import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import androidx.paging.PagedList
+import io.github.daeun1012.withhotels.data.local.LikeHotel
 
 class MainViewModel(
     private val repository: HotelRepository,
@@ -18,14 +20,8 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
-    val pagedListHotel = MutableLiveData<PagedList<Hotel>>()
-//    val pagedListHotel = Transformations.map(_pagedListHotel) {
-//        it.map { hotel ->
-//            hotel.isLiked = likeRepository?.isLiked(hotel.id)
-//        }
-//        it
-//    }
-
+    val pagedListHotel = MutableLiveData<PagedList<LikeHotel>>()
+//    val pagedListHotel = LivePagedListBuilder(repository.fetchHotels(), 20).build()
     val pagedListLike = LivePagedListBuilder(likeRepository.getAllLike(), 20).build()
 
     fun getHotels() {

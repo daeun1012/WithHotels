@@ -42,9 +42,9 @@ class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<L
                     onLikeListener.onItemClick(item.hotel)
                 }
                 likeListener = View.OnClickListener {
-                    item.hotel.isLiked = !item.hotel.isLiked
+                    item.isLiked = !item.isLiked
                     isLiked = item.isLiked
-                    onLikeListener.toggleLike(item.hotel)
+                    onLikeListener.toggleLike(item.hotel, item.isLiked)
                 }
                 executePendingBindings()
             }
@@ -57,7 +57,7 @@ class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<L
     }
 
     interface Callback {
-        fun toggleLike(hotel: Hotel)
+        fun toggleLike(hotel: Hotel, isLiked: Boolean)
         fun onItemClick(hotel: Hotel)
     }
 }
