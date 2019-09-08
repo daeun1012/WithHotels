@@ -38,8 +38,8 @@ class LikeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         val adapter = LikeListAdapter(object : LikeListAdapter.Callback {
-            override fun onItemClick(hotel: Hotel) {
-                val direction = MainFragmentDirections.actionMainToHotel(hotel)
+            override fun onItemClick(hotel: Hotel, isLiked: Boolean) {
+                val direction = MainFragmentDirections.actionMainToHotel(hotel, isLiked)
                 this@LikeFragment.findNavController().navigate(direction)
             }
 

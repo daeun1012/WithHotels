@@ -36,7 +36,7 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
                 rate = item.hotel.rate.toString()
                 isLiked = item.isLiked
                 clickListener = View.OnClickListener {
-                    onLikeListener.onItemClick(item.hotel)
+                    onLikeListener.onItemClick(item.hotel, item.isLiked)
                 }
                 likeListener = View.OnClickListener {
                     item.isLiked = !item.isLiked
@@ -50,7 +50,7 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
 
     interface Callback {
         fun toggleLike(hotel: Hotel, isLiked: Boolean)
-        fun onItemClick(hotel: Hotel)
+        fun onItemClick(hotel: Hotel, isLiked: Boolean)
     }
 }
 

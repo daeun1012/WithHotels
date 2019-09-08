@@ -58,6 +58,8 @@ class MainViewModel(
         )
     }
 
+    fun isLiked(id: Long) = likeRepository.isLiked(id)
+
     fun setFilter(num: Int) {
         filter.value = num
     }

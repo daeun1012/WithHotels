@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="onBackClickListener"
-            type="android.view.View.OnClickListener" />
+            name="hotel"
+            type="io.github.daeun1012.withhotels.data.local.Hotel" />
+
+        <variable
+            name="likeListener"
+            type="io.github.daeun1012.withhotels.ui.hotel.HotelFragment.Callback" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -89,15 +93,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    tools:text="제목" />
 
                 <TextView
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/tv_subject" />
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_subject"
+                    tools:text="가격" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:onClick="@{() -> likeListener.toggleLike(hotel)}"
+            android:tint="@android:color/white"
+            app:layout_anchor="@id/appbar"
+            app:layout_anchorGravity="bottom|end"
+            tools:src="@drawable/ic_favorite_black_24dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -22,6 +22,9 @@
         <argument
             android:name="hotel"
             app:argType="io.github.daeun1012.withhotels.data.local.Hotel" />
+
+        <argument android:name="isLiked"
+            app:argType="boolean"/>
     </fragment>
 
 </navigation>
