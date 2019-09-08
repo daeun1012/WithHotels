@@ -35,7 +35,7 @@ class MainFragment : Fragment() {
         }.attach()
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        binding.toolbar.title = getString(R.string.app_name)
+        activity?.actionBar?.title = getString(R.string.app_name)
     }
 
     private fun getTabTitle(position: Int): String? {

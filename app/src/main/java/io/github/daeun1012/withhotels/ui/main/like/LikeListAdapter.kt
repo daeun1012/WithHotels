@@ -49,7 +49,7 @@ class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<L
                 executePendingBindings()
             }
             if(item.createdAt != null) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:dd", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
                 binding.tvDate.visibility = View.VISIBLE
                 binding.tvDate.text = dateFormat.format(item.createdAt?.time)
             }

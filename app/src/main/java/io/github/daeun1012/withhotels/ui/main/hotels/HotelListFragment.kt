@@ -1,14 +1,13 @@
 package io.github.daeun1012.withhotels.ui.main.hotels
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
+import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding

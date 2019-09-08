@@ -1,14 +1,13 @@
 package io.github.daeun1012.withhotels.ui.main.like
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
+import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentLikeBinding
@@ -37,7 +36,7 @@ class LikeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        setHasOptionsMenu(true)
         val adapter = LikeListAdapter(object : LikeListAdapter.Callback {
             override fun onItemClick(hotel: Hotel) {
                 val direction = MainFragmentDirections.actionMainToHotel(hotel)
@@ -56,6 +55,32 @@ class LikeFragment : Fragment() {
         })
         initRecycler(adapter)
         subscribeUi(adapter)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_product_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.filter_created_at_desc -> {
+                viewModel.setFilter(MainViewModel.CREATD_AT_DESC)
+                true
+            }
+            R.id.filter_created_at_asc -> {
+                viewModel.setFilter(MainViewModel.CREATD_AT_ASC)
+                true
+            }
+            R.id.filter_rate_asc -> {
+                viewModel.setFilter(MainViewModel.RATE_ASC)
+                true
+            }
+            R.id.filter_rate_desc -> {
+                viewModel.setFilter(MainViewModel.RATE_DESC)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun subscribeUi(hotelAdapter: LikeListAdapter) {

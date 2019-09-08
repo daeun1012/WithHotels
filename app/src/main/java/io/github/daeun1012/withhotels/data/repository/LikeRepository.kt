@@ -1,8 +1,6 @@
 package io.github.daeun1012.withhotels.data.repository
 
-import androidx.paging.DataSource
 import io.github.daeun1012.withhotels.data.local.Like
-import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.data.local.dao.LikeDao
 
 class LikeRepository private constructor(
@@ -13,9 +11,15 @@ class LikeRepository private constructor(
 
     fun deleteLike(id: Long) = likeDao.delete(id)
 
-    fun getAllLike(): DataSource.Factory<Int, LikeHotel> {
-        return likeDao.allLikes()
-    }
+    fun getAllLike() = likeDao.allLikes()
+
+    fun getAllLikeCreatedAtDesc() = likeDao.getAllLikeCreatedAtDesc()
+
+    fun getAllLikeCreatedAtAsc() = likeDao.getAllLikeCreatedAtAsc()
+
+    fun getAllLikeRateDesc() = likeDao.getAllLikeRateDesc()
+
+    fun getAllLikeRateAsc() = likeDao.getAllLikeRateAsc()
 
     fun isLiked(hotelId: Long) = likeDao.isLiked(hotelId)
 

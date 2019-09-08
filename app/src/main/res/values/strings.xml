@@ -6,4 +6,5 @@
 
     <string name="no_results">리스트가 없습니다.</string>
     <string name="retry">다시 시도</string>
+    <string name="menu_filter">검색 조건</string>
 </resources>
