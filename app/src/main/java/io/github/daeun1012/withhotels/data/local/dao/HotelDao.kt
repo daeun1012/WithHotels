@@ -13,8 +13,8 @@ interface HotelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(products: List<Hotel>)
 
-    @Query("SELECT * FROM hotels")
-//    @Query("SELECT hotels.id, hotels.name, hotels.thumbnail, hotels.imagePath, hotels.subject, hotels.price, hotels.rate, (SELECT EXISTS(SELECT 1 FROM likes WHERE hotel_id = hotels.id LIMIT 1)) FROM hotels")
+//    @Query("SELECT * FROM hotels")
+    @Query("SELECT hotels.*, (SELECT 1 FROM likes WHERE hotel_id = hotels.id LIMIT 1) as is_liked_hotel FROM hotels")
     fun allHotels(): DataSource.Factory<Int, Hotel>
 
 }

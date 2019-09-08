@@ -8,7 +8,7 @@ data class LikeHotel(
     @Embedded val hotel: Hotel,
 
     @ColumnInfo(name = "created_at")
-    val createdAt: Calendar?,
+    val createdAt: Calendar? = null,
 
     @ColumnInfo(name = "is_liked")
     val isLiked: Boolean
