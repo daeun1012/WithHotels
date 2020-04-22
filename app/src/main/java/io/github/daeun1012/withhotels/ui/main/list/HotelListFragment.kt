@@ -3,13 +3,11 @@ package io.github.daeun1012.withhotels.ui.main.list
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.data.local.Hotel
-import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
 import io.github.daeun1012.withhotels.ui.main.MainViewModel
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
@@ -19,8 +17,8 @@ import timber.log.Timber
 class HotelListFragment : Fragment() {
 
     private lateinit var binding: FragmentHotelListBinding
-    private val viewModel: MainViewModel by viewModels {
-        InjectorUtils.provideMainViewModelFactory(requireContext())
+    private val viewModel: MainViewModel by activityViewModels {
+        InjectorUtils.provideMainViewModelFactory(requireActivity())
     }
 
     override fun onCreateView(
@@ -46,9 +44,9 @@ class HotelListFragment : Fragment() {
                 if (hotel == null) return
 
                 if (isLiked) {
-                    viewModel.addLikes(hotel.id)
+                    viewModel.addLikes(hotel)
                 } else {
-                    viewModel.deleteLikes(hotel.id)
+                    viewModel.deleteLikes(hotel)
                 }
             }
         })
@@ -65,7 +63,7 @@ class HotelListFragment : Fragment() {
     }
 
     private fun subscribeUi(hotelAdapter: HotelListAdapter) {
-        viewModel.pagedListHotel.observe(this, Observer<PagedList<LikeHotel>> {
+        viewModel.pagedListHotel.observe(this, Observer<PagedList<Hotel>> {
             Timber.d("Hotels: ${it?.size}")
             hotelAdapter.submitList(it)
         })

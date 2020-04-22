@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
@@ -19,8 +19,8 @@ import io.github.daeun1012.withhotels.utils.InjectorUtils
 class HotelFragment : Fragment() {
 
     private lateinit var binding: FragmentHotelBinding
-    private val viewModel: MainViewModel by viewModels {
-        InjectorUtils.provideMainViewModelFactory(requireContext())
+    private val viewModel: MainViewModel by activityViewModels {
+        InjectorUtils.provideMainViewModelFactory(requireActivity())
     }
 
     override fun onCreateView(
@@ -36,24 +36,32 @@ class HotelFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val item: Hotel = arguments?.get("hotel") as Hotel
-        val isLiked = viewModel.isLiked(item.id)
-
-        isLiked.observe(this, Observer<Boolean> {
+        item.isLiked.observe(this, Observer {
             if(it){
                 binding.fab.setImageResource(R.drawable.ic_favorite_black_24dp)
             } else {
                 binding.fab.setImageResource(R.drawable.ic_favorite_border_black_24dp)
             }
         })
+
+//        isLiked.observe(this, Observer<Boolean> {
+
+//        })
         binding.hotel = item
 
-        binding.lifecycleOwner = this
         binding.likeListener = object : Callback {
             override fun toggleLike(hotel: Hotel) {
-                if(isLiked == null || !isLiked.value!!) {
-                    viewModel.addLikes(item.id)
+                if(hotel.isLiked.value == false) {
+                    viewModel.addLikes(hotel)
                 } else {
-                    viewModel.deleteLikes(item.id)
+                    viewModel.deleteLikes(hotel)
+                }
+
+                hotel.isLiked.postValue(hotel.isLiked.value == false)
+                if(hotel.isLiked.value == true){
+                    binding.fab.setImageResource(R.drawable.ic_favorite_black_24dp)
+                } else {
+                    binding.fab.setImageResource(R.drawable.ic_favorite_border_black_24dp)
                 }
 
             }

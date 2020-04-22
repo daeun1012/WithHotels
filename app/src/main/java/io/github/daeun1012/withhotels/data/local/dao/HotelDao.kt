@@ -1,24 +1,34 @@
 package io.github.daeun1012.withhotels.data.local.dao
 
 import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import io.github.daeun1012.withhotels.data.local.Hotel
-import io.github.daeun1012.withhotels.data.local.LikeHotel
+import io.reactivex.Completable
 
 @Dao
 interface HotelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(products: List<Hotel>)
+    fun insert(product: Hotel): Completable
+
+    @Delete
+    fun delete(product: Hotel): Int
+
+    @Query("SELECT * FROM hotels WHERE id = :id")
+    fun get(id: Long): Hotel
 
     @Query("SELECT * FROM hotels")
-//    @Query("SELECT hotels.*, (SELECT 1 FROM likes WHERE hotel_id = hotels.id LIMIT 1) as is_liked_hotel FROM hotels")
     fun allHotels(): DataSource.Factory<Int, Hotel>
 
-    @Query("SELECT hotels.*, (SELECT 1 FROM likes WHERE hotel_id = hotels.id LIMIT 1) as is_liked FROM hotels")
-    fun allHotelsWithLike(): DataSource.Factory<Int, LikeHotel>
+    @Query("SELECT * FROM hotels ORDER BY created_at DESC")
+    fun getAllCreatedAtDesc(): DataSource.Factory<Int, Hotel>
 
+    @Query("SELECT * FROM hotels ORDER BY created_at ASC")
+    fun getAllCreatedAtAsc(): DataSource.Factory<Int, Hotel>
+
+    @Query("SELECT * FROM hotels ORDER BY rate DESC")
+    fun getAllRateDesc(): DataSource.Factory<Int, Hotel>
+
+    @Query("SELECT * FROM hotels ORDER BY rate ASC")
+    fun getAllRateAsc(): DataSource.Factory<Int, Hotel>
 }

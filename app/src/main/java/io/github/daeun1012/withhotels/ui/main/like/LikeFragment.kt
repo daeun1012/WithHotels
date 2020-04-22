@@ -3,6 +3,7 @@ package io.github.daeun1012.withhotels.ui.main.like
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -10,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
-import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.data.local.SortType
 import io.github.daeun1012.withhotels.databinding.FragmentLikeBinding
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
@@ -21,8 +21,8 @@ import timber.log.Timber
 class LikeFragment : Fragment() {
 
     private lateinit var binding: FragmentLikeBinding
-    private val viewModel: MainViewModel by viewModels {
-        InjectorUtils.provideMainViewModelFactory(requireContext())
+    private val viewModel: MainViewModel by activityViewModels {
+        InjectorUtils.provideMainViewModelFactory(requireActivity())
     }
 
     override fun onCreateView(
@@ -45,9 +45,9 @@ class LikeFragment : Fragment() {
 
             override fun toggleLike(hotel: Hotel, isLiked: Boolean) {
                 if (isLiked) {
-                    viewModel.addLikes(hotel.id)
+                    viewModel.addLikes(hotel)
                 } else {
-                    viewModel.deleteLikes(hotel.id)
+                    viewModel.deleteLikes(hotel)
                 }
             }
         })
@@ -82,8 +82,11 @@ class LikeFragment : Fragment() {
     }
 
     private fun subscribeUi(hotelAdapter: LikeListAdapter) {
-        viewModel.pagedListLike.observe(this, Observer<PagedList<LikeHotel>> {
+        viewModel.pagedListLike.observe(this, Observer<PagedList<Hotel>> {
             Timber.d("Likes: ${it?.size}")
+            it.map { hotel ->
+                hotel.isLiked.postValue(true)
+            }
             hotelAdapter.submitList(it)
         })
     }

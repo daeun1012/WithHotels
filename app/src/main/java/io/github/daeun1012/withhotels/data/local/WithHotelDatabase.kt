@@ -6,10 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import io.github.daeun1012.withhotels.data.local.dao.HotelDao
-import io.github.daeun1012.withhotels.data.local.dao.LikeDao
 
 @Database(
-    entities = [Hotel::class, Like::class],
+    entities = [Hotel::class],
     version = 1,
     exportSchema = false
 )
@@ -17,8 +16,6 @@ import io.github.daeun1012.withhotels.data.local.dao.LikeDao
 abstract class HotelDatabase : RoomDatabase() {
 
     abstract fun hotelDao(): HotelDao
-
-    abstract fun likeDao(): LikeDao
 
     companion object {
 

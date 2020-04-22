@@ -1,5 +1,7 @@
 package io.github.daeun1012.withhotels.data.local
 
+import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -11,5 +13,9 @@ data class Hotel(
     @field:SerializedName("name") val name: String,
     @field:SerializedName("thumbnail") val thumbnail: String,
     @field:SerializedName("description") @Embedded val description: Description? = null,
-    @field:SerializedName("rate") val rate: Float = 0f
-): Serializable
+    @field:SerializedName("rate") val rate: Float = 0f,
+    @ColumnInfo(name = "created_at") var createdAt: Calendar? = null
+): Serializable {
+
+    @Ignore var isLiked = MutableLiveData<Boolean>(false)
+}

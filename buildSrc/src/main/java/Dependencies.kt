@@ -26,7 +26,7 @@ object Versions {
     val kotlin = "1.3.41"
     val ktx = "1.0.2"
     val lifecycle = "2.2.0-alpha03"
-    val navigation = "2.0.0"
+    val navigation = "2.1.0"
     val viewPager2 = "1.0.0-beta03"
     val recyclerview = "1.1.0-alpha05"
 
