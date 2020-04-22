@@ -1,13 +1,13 @@
-package io.github.daeun1012.withhotels.ui.main.hotels
+package io.github.daeun1012.withhotels.ui.main.list
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagedList
-import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.data.local.LikeHotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelListBinding
@@ -19,7 +19,9 @@ import timber.log.Timber
 class HotelListFragment : Fragment() {
 
     private lateinit var binding: FragmentHotelListBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        InjectorUtils.provideMainViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +29,6 @@ class HotelListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHotelListBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(
-            activity!!,
-            InjectorUtils.provideMainViewModelFactory(requireContext())
-        ).get(MainViewModel::class.java)
         return binding.root
     }
 
@@ -38,6 +36,7 @@ class HotelListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = HotelListAdapter(object : HotelListAdapter.Callback {
+
             override fun onItemClick(hotel: Hotel, isLiked: Boolean) {
                 val direction = MainFragmentDirections.actionMainToHotel(hotel, isLiked)
                 this@HotelListFragment.findNavController().navigate(direction)
@@ -63,9 +62,6 @@ class HotelListFragment : Fragment() {
         binding.list.apply {
             this.adapter = hotelAdapter
         }
-//        binding.refreshLayout.setOnRefreshListener {
-//            viewModel.getHotels()
-//        }
     }
 
     private fun subscribeUi(hotelAdapter: HotelListAdapter) {

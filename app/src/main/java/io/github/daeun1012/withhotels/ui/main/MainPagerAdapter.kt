@@ -2,7 +2,7 @@ package io.github.daeun1012.withhotels.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import io.github.daeun1012.withhotels.ui.main.hotels.HotelListFragment
+import io.github.daeun1012.withhotels.ui.main.list.HotelListFragment
 import io.github.daeun1012.withhotels.ui.main.like.LikeFragment
 
 const val HOTEL_LIST_PAGE_INDEX = 0

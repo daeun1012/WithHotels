@@ -17,7 +17,7 @@ object Versions {
     val appcompat = "1.0.2"
     val material = "1.1.0-alpha09"
     val constraintlayout = "1.1.3"
-    val fragment = "1.1.0-alpha02"
+    val fragment = "1.1.0-alpha09"
 
     val junit = "4.12"
     val testRunner = "1.2.0"

@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/hotel_fragment"
-        android:name="io.github.daeun1012.withhotels.ui.hotel.HotelFragment"
+        android:name="io.github.daeun1012.withhotels.ui.main.detail.HotelFragment"
         tools:layout="@layout/fragment_hotel">
 
         <argument

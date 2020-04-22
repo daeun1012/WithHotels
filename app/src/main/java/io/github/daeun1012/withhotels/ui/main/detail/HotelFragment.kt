@@ -1,18 +1,15 @@
-package io.github.daeun1012.withhotels.ui.hotel
+package io.github.daeun1012.withhotels.ui.main.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.FragmentHotelBinding
@@ -22,7 +19,9 @@ import io.github.daeun1012.withhotels.utils.InjectorUtils
 class HotelFragment : Fragment() {
 
     private lateinit var binding: FragmentHotelBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        InjectorUtils.provideMainViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +29,6 @@ class HotelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHotelBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(
-            activity!!,
-            InjectorUtils.provideMainViewModelFactory(requireContext())
-        ).get(MainViewModel::class.java)
         return binding.root
     }
 

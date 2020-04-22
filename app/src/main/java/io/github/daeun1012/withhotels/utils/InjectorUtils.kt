@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-val BASE_URL = "https://withinnovation.co.kr"
+const val BASE_URL = "https://withinnovation.co.kr"
 
 object InjectorUtils {
 

@@ -11,7 +11,7 @@
 
         <variable
             name="likeListener"
-            type="io.github.daeun1012.withhotels.ui.hotel.HotelFragment.Callback" />
+            type="io.github.daeun1012.withhotels.ui.main.detail.HotelFragment.Callback" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

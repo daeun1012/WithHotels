@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import io.github.daeun1012.withhotels.data.repository.HotelRepository
 import io.github.daeun1012.withhotels.data.repository.LikeRepository
 
-class MainViewModelFactory(private val repository: HotelRepository, private val likeRepository: LikeRepository) : ViewModelProvider.Factory {
+class MainViewModelFactory(private val repository: HotelRepository, private val likeRepository: LikeRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = MainViewModel(

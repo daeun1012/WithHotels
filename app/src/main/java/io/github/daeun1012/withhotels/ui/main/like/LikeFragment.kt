@@ -3,6 +3,7 @@ package io.github.daeun1012.withhotels.ui.main.like
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -10,6 +11,7 @@ import androidx.paging.PagedList
 import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.data.local.LikeHotel
+import io.github.daeun1012.withhotels.data.local.SortType
 import io.github.daeun1012.withhotels.databinding.FragmentLikeBinding
 import io.github.daeun1012.withhotels.ui.main.MainFragmentDirections
 import io.github.daeun1012.withhotels.ui.main.MainViewModel
@@ -19,7 +21,9 @@ import timber.log.Timber
 class LikeFragment : Fragment() {
 
     private lateinit var binding: FragmentLikeBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        InjectorUtils.provideMainViewModelFactory(requireContext())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,10 +31,6 @@ class LikeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentLikeBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(
-            activity!!,
-            InjectorUtils.provideMainViewModelFactory(requireContext())
-        ).get(MainViewModel::class.java)
         return binding.root
     }
 
@@ -44,8 +44,6 @@ class LikeFragment : Fragment() {
             }
 
             override fun toggleLike(hotel: Hotel, isLiked: Boolean) {
-                if (hotel == null) return
-
                 if (isLiked) {
                     viewModel.addLikes(hotel.id)
                 } else {
@@ -64,19 +62,19 @@ class LikeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.filter_created_at_desc -> {
-                viewModel.setFilter(MainViewModel.CREATD_AT_DESC)
+                viewModel.setFilter(SortType.CREATED_AT_DESC)
                 true
             }
             R.id.filter_created_at_asc -> {
-                viewModel.setFilter(MainViewModel.CREATD_AT_ASC)
+                viewModel.setFilter(SortType.CREATED_AT_ASC)
                 true
             }
             R.id.filter_rate_asc -> {
-                viewModel.setFilter(MainViewModel.RATE_ASC)
+                viewModel.setFilter(SortType.RATE_ASC)
                 true
             }
             R.id.filter_rate_desc -> {
-                viewModel.setFilter(MainViewModel.RATE_DESC)
+                viewModel.setFilter(SortType.RATE_DESC)
                 true
             }
             else -> super.onOptionsItemSelected(item)

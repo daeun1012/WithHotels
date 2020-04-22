@@ -1,4 +1,4 @@
-package io.github.daeun1012.withhotels.ui.main.hotels
+package io.github.daeun1012.withhotels.ui.main.list
 
 import android.view.LayoutInflater
 import android.view.View
