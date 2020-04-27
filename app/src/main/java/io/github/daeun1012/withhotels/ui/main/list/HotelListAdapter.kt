@@ -8,6 +8,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.github.daeun1012.withhotels.R
 import io.github.daeun1012.withhotels.data.local.Hotel
 import io.github.daeun1012.withhotels.databinding.ItemHotelBinding
 
@@ -32,21 +33,19 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
         fun bind(item: Hotel, onLikeListener: Callback) {
             binding.apply {
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
-                name = item.name
-                rate = item.rate.toString()
-                if(item.isLiked == null) {
-                    item.isLiked = MutableLiveData(false)
-                }
-                item.isLiked.observeForever {
-                    this.isLiked = it
-                }
+                this.item = item
                 clickListener = View.OnClickListener {
-                    onLikeListener.onItemClick(item, item.isLiked.value ?: false)
+                    onLikeListener.onItemClick(item)
                 }
                 likeListener = View.OnClickListener {
-                    item.isLiked.postValue(!(item.isLiked.value ?: true))
-//                    isLiked = item.isLiked
-                    onLikeListener.toggleLike(item,  item.isLiked.value ?: false)
+                    item.isLiked = !item.isLiked
+
+                    binding.ivLike.setImageResource(if(item.isLiked) {
+                        R.drawable.ic_favorite_black_24dp
+                    } else {
+                        R.drawable.ic_favorite_border_black_24dp
+                    })
+                    onLikeListener.toggleLike(item)
                 }
                 executePendingBindings()
             }
@@ -54,8 +53,8 @@ class HotelListAdapter(private val onLikeListener: Callback) : PagedListAdapter<
     }
 
     interface Callback {
-        fun toggleLike(hotel: Hotel, isLiked: Boolean)
-        fun onItemClick(hotel: Hotel, isLiked: Boolean)
+        fun toggleLike(hotel: Hotel)
+        fun onItemClick(hotel: Hotel)
     }
 }
 

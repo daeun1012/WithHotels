@@ -36,34 +36,23 @@ class HotelFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val item: Hotel = arguments?.get("hotel") as Hotel
-        item.isLiked.observe(this, Observer {
-            if(it){
-                binding.fab.setImageResource(R.drawable.ic_favorite_black_24dp)
-            } else {
-                binding.fab.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-            }
-        })
-
-//        isLiked.observe(this, Observer<Boolean> {
-
-//        })
         binding.hotel = item
 
         binding.likeListener = object : Callback {
             override fun toggleLike(hotel: Hotel) {
-                if(hotel.isLiked.value == false) {
+                hotel.isLiked = !hotel.isLiked
+
+                if(hotel.isLiked) {
                     viewModel.addLikes(hotel)
                 } else {
                     viewModel.deleteLikes(hotel)
                 }
 
-                hotel.isLiked.postValue(hotel.isLiked.value == false)
-                if(hotel.isLiked.value == true){
-                    binding.fab.setImageResource(R.drawable.ic_favorite_black_24dp)
+                binding.fab.setImageResource(if(hotel.isLiked) {
+                    R.drawable.ic_favorite_black_24dp
                 } else {
-                    binding.fab.setImageResource(R.drawable.ic_favorite_border_black_24dp)
-                }
-
+                    R.drawable.ic_favorite_border_black_24dp
+                })
             }
         }
 

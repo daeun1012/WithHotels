@@ -37,22 +37,9 @@ class LikeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        val adapter = LikeListAdapter(object : LikeListAdapter.Callback {
-            override fun onItemClick(hotel: Hotel, isLiked: Boolean) {
-                val direction = MainFragmentDirections.actionMainToHotel(hotel, isLiked)
-                this@LikeFragment.findNavController().navigate(direction)
-            }
 
-            override fun toggleLike(hotel: Hotel, isLiked: Boolean) {
-                if (isLiked) {
-                    viewModel.addLikes(hotel)
-                } else {
-                    viewModel.deleteLikes(hotel)
-                }
-            }
-        })
-        initRecycler(adapter)
-        subscribeUi(adapter)
+        initRecycler()
+        subscribeUi()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -81,19 +68,29 @@ class LikeFragment : Fragment() {
         }
     }
 
-    private fun subscribeUi(hotelAdapter: LikeListAdapter) {
+    private fun subscribeUi() {
         viewModel.pagedListLike.observe(this, Observer<PagedList<Hotel>> {
             Timber.d("Likes: ${it?.size}")
-            it.map { hotel ->
-                hotel.isLiked.postValue(true)
-            }
-            hotelAdapter.submitList(it)
+            (binding.list.adapter as? LikeListAdapter)?.submitList(it)
         })
     }
 
-    private fun initRecycler(hotelAdapter: LikeListAdapter) {
+    private fun initRecycler() {
         binding.list.apply {
-            this.adapter = hotelAdapter
+            this.adapter = LikeListAdapter(object : LikeListAdapter.Callback {
+                override fun onItemClick(hotel: Hotel) {
+                    val direction = MainFragmentDirections.actionMainToHotel(hotel, hotel.isLiked)
+                    this@LikeFragment.findNavController().navigate(direction)
+                }
+
+                override fun toggleLike(hotel: Hotel) {
+                    if (hotel.isLiked) {
+                        viewModel.addLikes(hotel)
+                    } else {
+                        viewModel.deleteLikes(hotel)
+                    }
+                }
+            })
         }
     }
 

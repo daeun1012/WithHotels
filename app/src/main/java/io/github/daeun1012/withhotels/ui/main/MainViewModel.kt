@@ -21,7 +21,7 @@ class MainViewModel(
 
     private val compositeDisposable = CompositeDisposable()
     val pagedListHotel = MutableLiveData<PagedList<Hotel>>()
-//    val pagedListLike = LivePagedListBuilder(likeRepository.getAllLike(), 20).build()
+
     val pagedListLike: LiveData<PagedList<Hotel>> = filter.switchMap {
         when (it) {
 //            NO_FILTER -> LivePagedListBuilder(likeRepository.getAllLike(), 20).build()
@@ -33,11 +33,13 @@ class MainViewModel(
         }
     }
 
+    val updatePosition = MutableLiveData<Hotel>()
+
     fun getHotels() {
         compositeDisposable.add(
             repository.fetchOrGetHotels()
+                .subscribeOn(Schedulers.io())
                 .subscribe({
-                    Timber.d("response : $it")
                     pagedListHotel.value = it
                 }, { it.printStackTrace() })
         )
@@ -52,7 +54,8 @@ class MainViewModel(
                 .subscribe()
         )
 
-        pagedListHotel.value?.find { it.id == hotel.id }?.isLiked?.postValue(true)
+        pagedListHotel.value?.find { it.id == hotel.id }?.isLiked = true
+        updatePosition.postValue(hotel)
         Timber.d("test")
     }
 
@@ -63,7 +66,8 @@ class MainViewModel(
                 .subscribe()
         )
 
-        pagedListHotel.value?.find { it.id == hotel.id }?.isLiked?.postValue(false)
+        pagedListHotel.value?.find { it.id == hotel.id }?.isLiked = false
+        updatePosition.postValue(hotel)
         Timber.d("test")
     }
 

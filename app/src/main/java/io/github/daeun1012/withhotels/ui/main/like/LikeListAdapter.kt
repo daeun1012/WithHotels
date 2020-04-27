@@ -34,21 +34,13 @@ class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<H
         fun bind(item: Hotel, onLikeListener: Callback) {
             binding.apply {
                 Glide.with(binding.ivThumb.context).load(item.thumbnail).into(binding.ivThumb)
-                name = item.name
-                rate = item.rate.toString()
-                if(item.isLiked == null) {
-                    item.isLiked = MutableLiveData(false)
-                }
-                item.isLiked.observeForever {
-                    this.isLiked = it
-                }
+                this.item = item
                 clickListener = View.OnClickListener {
-                    onLikeListener.onItemClick(item, item.isLiked.value ?: false)
+                    onLikeListener.onItemClick(item)
                 }
                 likeListener = View.OnClickListener {
-                    item.isLiked.postValue(!(item.isLiked.value ?: true))
-//                    isLiked = item.isLiked
-                    onLikeListener.toggleLike(item, item.isLiked.value ?: false)
+                    item.isLiked = !item.isLiked
+                    onLikeListener.toggleLike(item)
                 }
                 executePendingBindings()
             }
@@ -61,8 +53,8 @@ class LikeListAdapter(private val onLikeListener: Callback) : PagedListAdapter<H
     }
 
     interface Callback {
-        fun toggleLike(hotel: Hotel, isLiked: Boolean)
-        fun onItemClick(hotel: Hotel, isLiked: Boolean)
+        fun toggleLike(hotel: Hotel)
+        fun onItemClick(hotel: Hotel)
     }
 }
 

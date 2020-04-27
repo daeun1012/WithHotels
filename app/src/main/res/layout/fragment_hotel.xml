@@ -113,6 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:onClick="@{() -> likeListener.toggleLike(hotel)}"
+            android:src="@{hotel.liked ? @drawable/ic_favorite_black_24dp : @drawable/ic_favorite_border_black_24dp}"
             android:tint="@android:color/white"
             app:layout_anchor="@id/appbar"
             app:layout_anchorGravity="bottom|end"

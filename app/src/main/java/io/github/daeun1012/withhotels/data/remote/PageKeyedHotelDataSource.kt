@@ -1,13 +1,18 @@
 package io.github.daeun1012.withhotels.data.remote
 
+import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import androidx.paging.PageKeyedDataSource
-import androidx.paging.PositionalDataSource
 import io.github.daeun1012.withhotels.data.local.Hotel
+import io.github.daeun1012.withhotels.data.repository.LocalRepository
 import timber.log.Timber
 import java.util.concurrent.Executor
 
 class PageKeyedHotelDataSource(
+    private val localRepository: LocalRepository,
     private val hotelApi: HotelService,
     private val retryExecutor: Executor
 ): PageKeyedDataSource<Int, Hotel>() {
@@ -72,6 +77,11 @@ class PageKeyedHotelDataSource(
                 Timber.d("loadInitial response : $result")
                 result.data?.let {
                     currentPage += 1
+
+                    it.hotelList.forEach {
+                        val isLike = localRepository.isLiked(it.id) != null
+                        it.isLiked = isLike
+                    }
                     networkState.postValue(NetworkState.Loaded())
                     initialLoad.postValue(NetworkState.Loaded())
                     callback.onResult(it.hotelList, 0, currentPage + 1)
@@ -96,6 +106,11 @@ class PageKeyedHotelDataSource(
                 Timber.d("loadAfter response : $result")
                 result.data?.let {
                     currentPage += 1
+
+                    it.hotelList.forEach {
+                        val isLike = localRepository.isLiked(it.id) != null
+                        it.isLiked = isLike
+                    }
                     networkState.postValue(NetworkState.Loaded())
                     initialLoad.postValue(NetworkState.Loaded())
                     callback.onResult(it.hotelList, currentPage + 1)

@@ -1,11 +1,8 @@
 package io.github.daeun1012.withhotels.data.repository
 
-import androidx.lifecycle.switchMap
 import androidx.paging.PagedList
 import androidx.paging.RxPagedListBuilder
-import androidx.paging.toLiveData
 import io.github.daeun1012.withhotels.data.local.Hotel
-import io.github.daeun1012.withhotels.data.local.Listing
 import io.github.daeun1012.withhotels.data.remote.HotelDataSourceFactory
 import io.github.daeun1012.withhotels.data.remote.HotelService
 import io.reactivex.Observable
@@ -25,23 +22,24 @@ class HotelRepository(
         .setEnablePlaceholders(true)
         .build()
 
-    val factory = HotelDataSourceFactory(hotelService, retryExecutor)
+    val factory = HotelDataSourceFactory(localRepository, hotelService, retryExecutor)
 
     val builder = RxPagedListBuilder<Int, Hotel>(factory, config)
 
     init {
-        factory.mapByPage { list ->
-            list.forEach { hotel ->
-                val temp = try {
-                    localRepository.isLiked(hotel.id).isLiked.value
-                } catch (e: NullPointerException) {
-                    false
-                }
-                hotel.isLiked.postValue(temp)
-            }
-
-            list
-        }
+//        factory.mapByPage { list ->
+//            list.forEach { hotel ->
+//                Timber.d("hotel: $hotel")
+//                val temp = try {
+//                    localRepository.isLiked(hotel.id).isLiked.value
+//                } catch (e: NullPointerException) {
+//                    false
+//                }
+//                hotel.isLiked.postValue(temp)
+//            }
+//
+//            list
+//        }
     }
 
     fun fetchOrGetHotels(): Observable<PagedList<Hotel>> = builder.buildObservable()
